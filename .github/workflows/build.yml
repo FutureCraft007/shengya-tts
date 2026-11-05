@@ -1,0 +1,46 @@
+name: Build Shengya TTS
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358' 'cmake;3.22.1'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew && ./gradlew :android:testDebugUnitTest :android:lintDebug :android:assembleDebug --no-daemon --max-workers=2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shengya-tts-android-test-apk
+          path: android/build/outputs/apk/debug/*.apk
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r windows/requirements-build.txt
+      - run: ./scripts/build-windows.ps1 -Verify
+        shell: pwsh
+      - run: choco install nsis --yes --no-progress
+        shell: pwsh
+      - run: ./scripts/build-installer.ps1 -MakeNsis 'C:\Program Files (x86)\NSIS\makensis.exe'
+        shell: pwsh
+      - run: python scripts/check-public-source.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shengya-tts-windows-x64
+          path: |
+            dist/ShengyaTTS-0.8.0-Setup-x64.exe
+            dist/windows/ShengyaTTS-0.8.0/
