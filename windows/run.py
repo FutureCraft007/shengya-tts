@@ -37,11 +37,11 @@ if __name__ == "__main__":
                 native = subprocess.run([str(asset_root() / "native/qwen3-tts-cli.exe"), "--help"],
                     capture_output=True, timeout=20, creationflags=subprocess.CREATE_NO_WINDOW)
                 report = {"application": "Shengya TTS", "version": __version__, "title": app.windowTitle(),
-                    "tabs": app.pages.count(), "cloudVoiceCount": len(app.catalog), "ui": "Qt 6",
+                    "tabs": app.pages.count(), "cloudEndpointConfigurable": app.cloud_endpoint.isEnabled(), "ui": "Qt 6",
                     "nativeHelpExitCode": native.returncode,
                     "nativeHelpPresent": b"usage" in (native.stdout + native.stderr).lower()}
                 Path(sys.argv[2]).write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-                if native.returncode or not report["nativeHelpPresent"] or not report["cloudVoiceCount"]:
+                if native.returncode or not report["nativeHelpPresent"] or not report["cloudEndpointConfigurable"]:
                     raise SystemExit(1)
             finally:
                 app.close()

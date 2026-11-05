@@ -62,7 +62,7 @@ env['PATH'] = str(Path(os.environ['SYSTEMROOT'])/'System32')+';'+os.environ['SYS
 startup_report = ROOT/'build/verification/windows-startup-0.8.0.json'
 run([install/'ShengyaTTS.exe', '--diagnose', startup_report], env=env)
 info = json.loads(startup_report.read_text(encoding='utf-8'))
-assert info['version']=='0.8.0' and info['ui']=='Qt 6' and info['tabs']==5
+assert info['version']=='0.8.0' and info['ui']=='Qt 6' and info['tabs']==5 and info['cloudEndpointConfigurable']
 assert info['nativeHelpExitCode']==0 and info['nativeHelpPresent']
 report['installedStartupAndNativeCli'] = True
 

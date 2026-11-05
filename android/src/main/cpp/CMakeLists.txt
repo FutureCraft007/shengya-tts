@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# Keep compiler source locations in distributable binaries relative to the project.
+get_filename_component(SHENGYA_SOURCE_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../../.." ABSOLUTE)
+add_compile_options("-ffile-prefix-map=${SHENGYA_SOURCE_ROOT}=.")
+
 # Native compilation is memory intensive; keep Windows developer builds bounded.
 set_property(GLOBAL PROPERTY JOB_POOLS qwen_compile=2 qwen_link=1)
 set(CMAKE_JOB_POOL_COMPILE qwen_compile)

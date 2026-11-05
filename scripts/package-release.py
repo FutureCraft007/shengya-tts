@@ -19,7 +19,7 @@ def main():
     installer=load('windows-installer-0.8.0.json')
     tests=load('windows-tests-0.8.0.json')
     assert startup['version']==VERSION and startup['nativeHelpExitCode']==0 and startup['nativeHelpPresent']
-    assert startup['tabs']==5 and startup['cloudVoiceCount']>0 and startup['ui']=='Qt 6'
+    assert startup['tabs']==5 and startup['cloudEndpointConfigurable'] and startup['ui']=='Qt 6'
     assert tests['tests']>=24 and tests['failures']==tests['errors']==0
     assert all(installer[k] for k in ('unrelatedDirectoryRejected','installAndReinstall','installedStartupAndNativeCli','uninstall','unknownFilePreserved','separateUserDataPreserved'))
     setup=OUT/f'ShengyaTTS-{VERSION}-Setup-x64.exe'
