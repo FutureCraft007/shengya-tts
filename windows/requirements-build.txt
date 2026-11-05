@@ -1,0 +1,6 @@
+# GUI runtime and build tools; end users install none of these.
+PySide6-Essentials==6.11.0
+pyinstaller==6.22.2
+Pillow==12.1.1
+numpy==2.3.5
+sherpa-onnx==2.0.1

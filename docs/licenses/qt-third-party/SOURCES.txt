@@ -1,0 +1,14 @@
+Qt Base v6.11.0 bundled third-party notices; files retained verbatim.
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/blake2/COPYING?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/double-conversion/LICENSE?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/freetype/LICENSE.txt?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/freetype/docs/FTL.TXT?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/freetype/docs/GPLv2.TXT?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/harfbuzz-ng/COPYING?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/libjpeg/COPYRIGHT.txt?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/libjpeg/LICENSE?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/libpng/LICENSE?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/pcre2/LICENCE.md?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/pcre2/LICENSE-SLJIT?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/tinycbor/LICENSE?h=v6.11.0
+https://code.qt.io/cgit/qt/qtbase.git/tree/src/3rdparty/zlib/LICENSE?h=v6.11.0

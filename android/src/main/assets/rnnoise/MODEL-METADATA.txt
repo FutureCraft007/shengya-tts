@@ -1,0 +1,11 @@
+RNNoise local speech denoiser
+
+Upstream: https://github.com/xiph/rnnoise
+Pinned commit: 70f1d256acd4b34a572f999a05c87bf00b67730d
+Official model archive SHA-256: 0a8755f8e2d834eff6a54714ecc7d75f9932e845df35f8b59bc52a7cfe6e8b37
+Packaged int8 model SHA-256: 1ad07b428be34c74d9678d05b3c387b73ccf0e6203a1a5f9ce58689b30b303c8
+
+The packaged model keeps the official full model's int8 matrices, sparse
+indices, scales, biases, diagonal weights, and the float-only input/output
+layers. Optional duplicate float matrices are omitted; RNNoise's supported
+integer inference path is used on Android.

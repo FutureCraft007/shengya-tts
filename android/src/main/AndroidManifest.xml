@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Qwen3TtsAndroid">
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+        <service android:name=".api.LocalApiService" android:exported="false" android:stopWithTask="false" android:foregroundServiceType="dataSync|mediaProcessing" />
+        <service android:name=".api.QwenWorker1" android:process=":qwen_worker_1" android:exported="false" />
+        <service android:name=".api.QwenWorker2" android:process=":qwen_worker_2" android:exported="false" />
+        <service android:name=".api.QwenWorker3" android:process=":qwen_worker_3" android:exported="false" />
+        <service android:name=".api.QwenWorker4" android:process=":qwen_worker_4" android:exported="false" />
+        <service android:name=".api.QwenWorker5" android:process=":qwen_worker_5" android:exported="false" />
+        <service android:name=".api.QwenWorker6" android:process=":qwen_worker_6" android:exported="false" />
+        <uses-native-library
+            android:name="libOpenCL-car.so"
+            android:required="false" />
+        <uses-native-library
+            android:name="libOpenCL-pixel.so"
+            android:required="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Qwen3TtsAndroid">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
