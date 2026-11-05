@@ -1,0 +1,57 @@
+name: Import reviewed source snapshot
+on:
+  push:
+    branches: [source-import]
+    paths: [shengya-tts-0.8.0-public-source.zip]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.repository == 'FutureCraft007/shengya-tts'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check and install the reviewed source
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive=shengya-tts-0.8.0-public-source.zip
+          echo "6563bbc65e672f6c883bf206246bd4b21d19ffcad5cfc68da8871256a697486e  $archive" | sha256sum -c -
+          cp -- "$archive" "$RUNNER_TEMP/$archive"
+          git fetch origin main
+          git switch --detach FETCH_HEAD
+          test "$(git ls-files)" = README.md
+          python3 - "$RUNNER_TEMP/$archive" <<'PY'
+          from hashlib import sha256
+          from pathlib import Path, PurePosixPath
+          from zipfile import ZipFile
+          import json
+          import sys
+
+          prefix = "shengya-tts/"
+          with ZipFile(sys.argv[1]) as archive:
+              manifest = json.loads(archive.read(prefix + "SOURCE-MANIFEST.json"))
+              assert len(manifest) == 1551
+              assert len(archive.namelist()) == len(manifest) + 1
+              assert set(archive.namelist()) == {prefix + p for p in manifest.keys() | {"SOURCE-MANIFEST.json"}}
+              for name, digest in manifest.items():
+                  path = PurePosixPath(name)
+                  assert path.as_posix() == name and not path.is_absolute()
+                  assert not {".git", "..", "."} & set(path.parts) and "\\" not in name
+                  data = archive.read(prefix + name)
+                  assert sha256(data).hexdigest() == digest, name
+                  if path.parts[:2] == (".github", "workflows"):
+                      continue
+                  target = Path(name)
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(data)
+                  if target.name == "gradlew" or target.suffix == ".sh":
+                      target.chmod(0o755)
+          PY
+          git -c core.autocrlf=false add -f -- .
+          test "$(git ls-files | wc -l)" -eq 1550
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "Publish Shengya TTS source"
+          git push origin HEAD:refs/heads/main
